@@ -13,10 +13,16 @@ namespace TypiCodeProject
         public static RestRequest restRequest;
         public static string baseURL = "https://jsonplaceholder.typicode.com/";
 
-        public static RestClient SetPostEndpoint(string endpoint)
+        public static RestClient SetUrl(string endpoint)
         {
             var url = Path.Combine(baseURL, endpoint);
             return client = new RestClient(url);
+        }
+        public static RestClient SetUrlIdontexist(string endpoint)
+        {
+            var url = Path.Combine(baseURL, endpoint);
+            return client = new RestClient(url+ "/idontexist/");
+
         }
 
         public static RestRequest GetRequest()
@@ -25,36 +31,57 @@ namespace TypiCodeProject
             restRequest.AddHeader("Accept", "application/json");
             return restRequest;
         }
-
-        public RestApiHelper SetResourse(string resource)
+        public static RestRequest GetRequest(string Id)
         {
-            restRequest.Resource = resource;
-            return this;
+            var resource = Id;          
+            restRequest = new RestRequest(resource,Method.GET);
+            restRequest.AddHeader("Accept", "application/json");
+            return restRequest;
+        }
+        public static RestRequest DeleteRequest(string Id)
+        {
+            var resource = Id;
+            restRequest = new RestRequest(resource, Method.DELETE);
+            restRequest.AddHeader("Accept", "application/json");
+            return restRequest;
+        }
+        public static RestRequest ReplacePostRequest(string Id)
+        {
+            var resource = Id;
+            restRequest = new RestRequest(resource, Method.PUT);
+            restRequest.AddHeader("Accept", "application/json");
+            return restRequest;
+        }
+        public static RestRequest PostDoesNotExist()
+        {
+            var resource = "/posts/idontexist/";
+            restRequest = new RestRequest(resource,Method.GET);
+            restRequest.AddHeader("Accept", "application/json");
+            return restRequest;
         }
 
-        public RestApiHelper SetMethod(Method method)
+        public static IRestResponse GetResponse()
         {
-            restRequest.Method = method;
-            return this;
-        }
-        public RestApiHelper AddHeaders(IDictionary<string, string> headers)
-        {
-            foreach (var header in headers)
-            {
-                restRequest.AddParameter(header.Key, header.Value, ParameterType.HttpHeader);
-            }
-            return this;
+            return client.Execute(restRequest);
+            
         }
 
-        public RestApiHelper AddJsonContent(object data)
+        public static RestRequest CreatePostRequest()
         {
+            var PostInfo = new PostData();
+            PostInfo.userId = 101;
+            PostInfo.Title = "Foo";
+            PostInfo.Body = "bar";
+            var resource = "/posts/";
+            restRequest = new RestRequest(resource, Method.POST);
             restRequest.RequestFormat = DataFormat.Json;
             restRequest.AddHeader("Content-Type", "application/json");
-            restRequest.AddJsonBody(data);
-            return this;
+            restRequest.AddJsonBody(PostInfo);
+            return restRequest;
         }
 
-        
+
+
 
     }
 }
