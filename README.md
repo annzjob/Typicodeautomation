@@ -4,7 +4,7 @@ Added scenarios for CRUD operations and Negative test
 
 
 This contains:
-Feature File --> Contains Specflow scenarios in Gherkin 
+Feature File(APItests.feature) --> Contains Specflow scenarios in Gherkin 
 
 
 Step definition-->Actual definition of steps for the implementation of CRUD operations
