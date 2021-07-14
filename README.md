@@ -7,7 +7,7 @@ This contains:
 Feature File(APItests.feature) --> Contains Specflow scenarios in Gherkin 
 
 
-Step definition-->Actual definition of steps for the implementation of CRUD operations
+Step definition(APItestsSteps.cs)-->Actual definition of steps for the implementation of CRUD operations
 
 
 
